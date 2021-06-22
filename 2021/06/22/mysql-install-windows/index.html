@@ -421,6 +421,15 @@
                 </div>
                 <div class="col s5 right-align">
                     
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E8%BF%90%E7%BB%B4/" class="post-category">
+                                运维
+                            </a>
+                        
+                    </div>
+                    
                 </div>
             </div>
 
@@ -457,11 +466,40 @@
 <li><p>解压压缩包，并新建my.ini文件以代替my-default.ini文件</p>
 </li>
 <li><p>my.ini文件内容如下：</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[mysql]</span></span><br><span class="line"><span class="comment">#设置mysql客户端默认字符集</span></span><br><span class="line"><span class="attr">default-character-set</span>=utf8</span><br><span class="line"><span class="section">[mysqld]</span></span><br><span class="line"><span class="comment">#设置3306端口</span></span><br><span class="line"><span class="attr">port</span> = <span class="number">3306</span> </span><br><span class="line"><span class="comment">#设置mysql的安装目录</span></span><br><span class="line"><span class="attr">basedir</span>=D:\\Program Files\\Mysql</span><br><span class="line"><span class="comment">#设置mysql数据库的数据的存放目录</span></span><br><span class="line"><span class="attr">datadir</span>=D:\\Program Files\\Mysql\\data</span><br><span class="line"><span class="comment">#允许最大连接数</span></span><br><span class="line"><span class="attr">max_connections</span>=<span class="number">200</span></span><br><span class="line"><span class="comment">#服务端使用的字符集默认为8比特编码的latin1字符集</span></span><br><span class="line"><span class="attr">character-set-server</span>=utf8</span><br><span class="line"><span class="comment">#创建新表时将使用的默认存储引擎</span></span><br><span class="line"><span class="attr">default-storage-engine</span>=INNODB</span><br></pre></td></tr></table></figure></li>
+<pre class="line-numbers language-ini" data-language="ini"><code class="language-ini"><span class="token selector">[mysql]</span>
+<span class="token comment">#设置mysql客户端默认字符集</span>
+<span class="token constant">default-character-set</span><span class="token attr-value"><span class="token punctuation">=</span>utf8</span>
+<span class="token selector">[mysqld]</span>
+<span class="token comment">#设置3306端口</span>
+<span class="token constant">port</span> <span class="token attr-value"><span class="token punctuation">=</span> 3306 </span>
+<span class="token comment">#设置mysql的安装目录</span>
+<span class="token constant">basedir</span><span class="token attr-value"><span class="token punctuation">=</span>D:\\Program Files\\Mysql</span>
+<span class="token comment">#设置mysql数据库的数据的存放目录</span>
+<span class="token constant">datadir</span><span class="token attr-value"><span class="token punctuation">=</span>D:\\Program Files\\Mysql\\data</span>
+<span class="token comment">#允许最大连接数</span>
+<span class="token constant">max_connections</span><span class="token attr-value"><span class="token punctuation">=</span>200</span>
+<span class="token comment">#服务端使用的字符集默认为8比特编码的latin1字符集</span>
+<span class="token constant">character-set-server</span><span class="token attr-value"><span class="token punctuation">=</span>utf8</span>
+<span class="token comment">#创建新表时将使用的默认存储引擎</span>
+<span class="token constant">default-storage-engine</span><span class="token attr-value"><span class="token punctuation">=</span>INNODB</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li><p>以管理员身份打开cmd命令窗口，进入到mysql安装目录中，执行如下命令：</p>
 </li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化,此时mysql安装目录下已经自动创建了data文件夹。</span></span><br><span class="line">mysqld --initialize-insecure --user=mysql</span><br><span class="line"><span class="comment"># 安装mysql服务，此处注意：是mysqld不是mysql</span></span><br><span class="line">mysqld install</span><br><span class="line"><span class="comment"># 启动mysql服务</span></span><br><span class="line">net start mysql</span><br><span class="line"><span class="comment"># 登录连接mysql客户端</span></span><br><span class="line">mysql -u root -p</span><br><span class="line"><span class="comment"># 进入mysql控制台,修改root用户密码</span></span><br><span class="line">alter user <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> identified by <span class="string">&#x27;新密码&#x27;</span></span><br><span class="line"><span class="comment"># -------其它命令，此处不执行---------</span></span><br><span class="line"><span class="comment"># 停止mysql服务</span></span><br><span class="line">net stop mysql</span><br><span class="line"><span class="comment"># 删除已安装的mysql服务</span></span><br><span class="line">mysqld remove</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 初始化,此时mysql安装目录下已经自动创建了data文件夹。</span>
+mysqld --initialize-insecure --user<span class="token operator">=</span>mysql
+<span class="token comment"># 安装mysql服务，此处注意：是mysqld不是mysql</span>
+mysqld <span class="token function">install</span>
+<span class="token comment"># 启动mysql服务</span>
+net start mysql
+<span class="token comment"># 登录连接mysql客户端</span>
+mysql -u root -p
+<span class="token comment"># 进入mysql控制台,修改root用户密码</span>
+alter user <span class="token string">'root'</span>@<span class="token string">'localhost'</span> identified by <span class="token string">'新密码'</span>
+<span class="token comment"># -------其它命令，此处不执行---------</span>
+<span class="token comment"># 停止mysql服务</span>
+net stop mysql
+<span class="token comment"># 删除已安装的mysql服务</span>
+mysqld remove<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -725,8 +763,12 @@
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Nicholas Sun
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%BF%90%E7%BB%B4/" class="post-category">
+                                    运维
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -771,8 +813,12 @@
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Nicholas Sun
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%B5%8B%E8%AF%95/" class="post-category">
+                                    测试
+                                </a>
+                            
                             
                         </span>
                     </div>

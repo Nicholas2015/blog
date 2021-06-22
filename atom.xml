@@ -6,7 +6,7 @@
   <link href="https://nicholas2015.github.io/atom.xml" rel="self"/>
   
   <link href="https://nicholas2015.github.io/"/>
-  <updated>2021-06-22T15:11:40.982Z</updated>
+  <updated>2021-06-22T15:39:00.753Z</updated>
   <id>https://nicholas2015.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://nicholas2015.github.io/2021/06/22/mysql-install-windows/"/>
     <id>https://nicholas2015.github.io/2021/06/22/mysql-install-windows/</id>
     <published>2021-06-22T14:45:16.000Z</published>
-    <updated>2021-06-22T15:11:40.982Z</updated>
+    <updated>2021-06-22T15:39:00.753Z</updated>
     
     
       
@@ -34,6 +34,8 @@
     
     
     
+    <category term="运维" scheme="https://nicholas2015.github.io/categories/%E8%BF%90%E7%BB%B4/"/>
+    
     
     <category term="database" scheme="https://nicholas2015.github.io/tags/database/"/>
     
@@ -44,7 +46,7 @@
     <link href="https://nicholas2015.github.io/2021/01/01/hello-world/"/>
     <id>https://nicholas2015.github.io/2021/01/01/hello-world/</id>
     <published>2021-01-01T12:00:00.000Z</published>
-    <updated>2021-06-22T15:12:27.397Z</updated>
+    <updated>2021-06-22T15:38:45.330Z</updated>
     
     
       
@@ -56,6 +58,8 @@
       
     
     
+    
+    <category term="测试" scheme="https://nicholas2015.github.io/categories/%E6%B5%8B%E8%AF%95/"/>
     
     
     <category term="test" scheme="https://nicholas2015.github.io/tags/test/"/>
