@@ -6,7 +6,7 @@
   <link href="https://nicholas2015.github.io/atom.xml" rel="self"/>
   
   <link href="https://nicholas2015.github.io/"/>
-  <updated>2021-06-26T01:14:14.297Z</updated>
+  <updated>2021-06-26T01:15:44.915Z</updated>
   <id>https://nicholas2015.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>git本地项目上传</title>
+    <link href="https://nicholas2015.github.io/2021/06/26/git-local-project-upload/"/>
+    <id>https://nicholas2015.github.io/2021/06/26/git-local-project-upload/</id>
+    <published>2021-06-26T01:15:00.000Z</published>
+    <updated>2021-06-26T01:15:44.915Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;1、（先进入项目文件夹）通过命令 git init 把这个目录变成git可以管理的仓库&lt;/p&gt;
+&lt;pre class=&quot;line-numbers language-bash&quot; data-language=&quot;bash&quot;&gt;&lt;code</summary>
+        
+      
+    
+    
+    
+    <category term="工具" scheme="https://nicholas2015.github.io/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+    <category term="git" scheme="https://nicholas2015.github.io/tags/git/"/>
+    
+  </entry>
   
   <entry>
     <title>kubernetes环境搭建</title>
