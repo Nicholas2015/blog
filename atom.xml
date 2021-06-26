@@ -6,7 +6,7 @@
   <link href="https://nicholas2015.github.io/atom.xml" rel="self"/>
   
   <link href="https://nicholas2015.github.io/"/>
-  <updated>2021-06-26T01:15:44.915Z</updated>
+  <updated>2021-06-26T14:54:48.861Z</updated>
   <id>https://nicholas2015.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>基于Docker的Redis集群搭建</title>
+    <link href="https://nicholas2015.github.io/2021/06/26/docker-redis-cluster/"/>
+    <id>https://nicholas2015.github.io/2021/06/26/docker-redis-cluster/</id>
+    <published>2021-06-26T14:54:00.000Z</published>
+    <updated>2021-06-26T14:54:48.861Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;基于Docker的Redis集群搭建&quot;&gt;&lt;a href=&quot;#基于Docker的Redis集群搭建&quot; class=&quot;headerlink&quot; title=&quot;基于Docker的Redis集群搭建&quot;&gt;&lt;/a&gt;基于Docker的Redis集群搭建&lt;/h2&gt;&lt;h4</summary>
+        
+      
+    
+    
+    
+    <category term="运维" scheme="https://nicholas2015.github.io/categories/%E8%BF%90%E7%BB%B4/"/>
+    
+    
+    <category term="redis" scheme="https://nicholas2015.github.io/tags/redis/"/>
+    
+  </entry>
   
   <entry>
     <title>git本地项目上传</title>
