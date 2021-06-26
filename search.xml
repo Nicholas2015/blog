@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>kubernetes环境搭建</title>
+      <link href="/2021/06/26/kubernetes-install-01/"/>
+      <url>/2021/06/26/kubernetes-install-01/</url>
+      
+        <content type="html"><![CDATA[<h2 id="1-环境搭建前期准备"><a href="#1-环境搭建前期准备" class="headerlink" title="1. 环境搭建前期准备"></a>1. 环境搭建前期准备</h2><h3 id="组件版本"><a href="#组件版本" class="headerlink" title="组件版本"></a>组件版本</h3><ul><li>Kubernetes 1.11.2</li><li>Docker 18.06.0-ce</li><li>Etcd v3.3.9</li><li>Flanneld v0.10.0</li><li>TLS 认证通信（所有组件，如etcd、kubernetes master 和node）</li><li>RBAC 授权</li><li>kubelet TLS Bootstrapping</li><li>kubedns v1.14.10、dashboard v1.10.0、heapster v1.5.4等插件</li></ul><h3 id="etcd-集群-amp-amp-k8s-master-机器-amp-amp-k8s-node-机器"><a href="#etcd-集群-amp-amp-k8s-master-机器-amp-amp-k8s-node-机器" class="headerlink" title="etcd 集群 &amp;&amp; k8s master 机器 &amp;&amp; k8s node 机器"></a>etcd 集群 &amp;&amp; k8s master 机器 &amp;&amp; k8s node 机器</h3><ul><li>master01：ip1</li><li>node01: ip2</li><li>node02: ip3</li><li>node03: ip4</li></ul><h3 id="集群环境变量"><a href="#集群环境变量" class="headerlink" title="集群环境变量"></a>集群环境变量</h3><p>后续部署将会使用到的全局变量，定义如下（根据自己的机器、网络修改）：</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"># TLS Bootstrapping 使用的Token，可以使用命令 head -c 16 /dev/urandom | od -An -t x | tr -d ' ' 生成$ export BOOTSTRAP_TOKEN="8981b594122ebed7596f1d3b69c78223"# 建议使用未用的网段来定义服务网段和Pod 网段# 服务网段(Service CIDR)，部署前路由不可达，部署后集群内部使用IP:Port可达$ export SERVICE_CIDR="10.254.0.0/16"# Pod 网段(Cluster CIDR)，部署前路由不可达，部署后路由可达(flanneld 保证)$ export CLUSTER_CIDR="172.30.0.0/16"# 服务端口范围(NodePort Range)$ export NODE_PORT_RANGE="30000-32766"# etcd集群服务地址列表$ export ETCD_ENDPOINTS="https://ip1:2379,https://ip2:2379,https://ip3:2379"# flanneld 网络配置前缀$ export FLANNEL_ETCD_PREFIX="/kubernetes/network"# kubernetes 服务IP(预先分配，一般为SERVICE_CIDR中的第一个IP)$ export CLUSTER_KUBERNETES_SVC_IP="10.254.0.1"# 集群 DNS 服务IP(从SERVICE_CIDR 中预先分配)$ export CLUSTER_DNS_SVC_IP="10.254.0.2"# 集群 DNS 域名$ export CLUSTER_DNS_DOMAIN="cluster.local."# MASTER API Server 地址$ export MASTER_URL="k8s-api.virtual.local"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="2-创建CA-证书和密钥"><a href="#2-创建CA-证书和密钥" class="headerlink" title="2. 创建CA 证书和密钥"></a>2. 创建CA 证书和密钥</h2><p><code>kubernetes</code> 系统各个组件需要使用<code>TLS</code>证书对通信进行加密，这里我们使用<code>CloudFlare</code>的PKI 工具集<a href="https://pkg.cfssl.org/">cfssl</a> 来生成Certificate Authority(CA) 证书和密钥文件， CA 是自签名的证书，用来签名后续创建的其他TLS 证书。</p><h3 id="安装-CFSSL"><a href="#安装-CFSSL" class="headerlink" title="安装 CFSSL"></a>安装 CFSSL</h3><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ wget https://pkg.cfssl.org/R1.2/cfssl_linux-amd64$ chmod +x cfssl_linux-amd64$ sudo mv cfssl_linux-amd64 /usr/k8s/bin/cfssl$ wget https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64$ chmod +x cfssljson_linux-amd64$ sudo mv cfssljson_linux-amd64 /usr/k8s/bin/cfssljson$ wget https://pkg.cfssl.org/R1.2/cfssl-certinfo_linux-amd64$ chmod +x cfssl-certinfo_linux-amd64$ sudo mv cfssl-certinfo_linux-amd64 /usr/k8s/bin/cfssl-certinfo$ export PATH=/usr/k8s/bin:$PATH$ mkdir ssl &amp;&amp; cd ssl$ cfssl print-defaults config &gt; config.json$ cfssl print-defaults csr &gt; csr.json<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>借鉴于<a href="https://blog.qikqiak.com/post/manual-install-high-available-kubernetes-cluster">https://blog.qikqiak.com/post/manual-install-high-available-kubernetes-cluster</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 运维 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> kubernetes </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>MySQL免安装版部署</title>
       <link href="/2021/06/22/mysql-install-windows/"/>
       <url>/2021/06/22/mysql-install-windows/</url>

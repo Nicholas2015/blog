@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="MySQL免安装版部署, 尼古拉斯的博客">
+    <meta name="keywords" content="kubernetes环境搭建, 尼古拉斯的博客">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>MySQL免安装版部署 | 尼古拉斯的博客</title>
+    <title>kubernetes环境搭建 | 尼古拉斯的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -291,12 +291,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">MySQL免安装版部署</h1>
+                    <h1 class="description center-align post-title">kubernetes环境搭建</h1>
                 </div>
             </div>
         </div>
@@ -412,8 +412,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/database/">
-                                <span class="chip bg-color">database</span>
+                            <a href="/tags/kubernetes/">
+                                <span class="chip bg-color">kubernetes</span>
                             </a>
                         
                     </div>
@@ -437,7 +437,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-22
+                    2021-06-26
                 </div>
                 
 
@@ -461,45 +461,86 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="MySQL免安装版部署（Windows）"><a href="#MySQL免安装版部署（Windows）" class="headerlink" title="MySQL免安装版部署（Windows）"></a>MySQL免安装版部署（Windows）</h2><h3 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h3><p><a target="_blank" rel="noopener" href="https://downloads.mysql.com/archives/community/">MySQL下载地址</a></p>
-<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><ul>
-<li><p>解压压缩包，并新建my.ini文件以代替my-default.ini文件</p>
-</li>
-<li><p>my.ini文件内容如下：</p>
-<pre class="line-numbers language-ini" data-language="ini"><code class="language-ini"><span class="token selector">[mysql]</span>
-<span class="token comment">#设置mysql客户端默认字符集</span>
-<span class="token constant">default-character-set</span><span class="token attr-value"><span class="token punctuation">=</span>utf8</span>
-<span class="token selector">[mysqld]</span>
-<span class="token comment">#设置3306端口</span>
-<span class="token constant">port</span> <span class="token attr-value"><span class="token punctuation">=</span> 3306 </span>
-<span class="token comment">#设置mysql的安装目录</span>
-<span class="token constant">basedir</span><span class="token attr-value"><span class="token punctuation">=</span>D:\\Program Files\\Mysql</span>
-<span class="token comment">#设置mysql数据库的数据的存放目录</span>
-<span class="token constant">datadir</span><span class="token attr-value"><span class="token punctuation">=</span>D:\\Program Files\\Mysql\\data</span>
-<span class="token comment">#允许最大连接数</span>
-<span class="token constant">max_connections</span><span class="token attr-value"><span class="token punctuation">=</span>200</span>
-<span class="token comment">#服务端使用的字符集默认为8比特编码的latin1字符集</span>
-<span class="token constant">character-set-server</span><span class="token attr-value"><span class="token punctuation">=</span>utf8</span>
-<span class="token comment">#创建新表时将使用的默认存储引擎</span>
-<span class="token constant">default-storage-engine</span><span class="token attr-value"><span class="token punctuation">=</span>INNODB</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li><p>以管理员身份打开cmd命令窗口，进入到mysql安装目录中，执行如下命令：</p>
-</li>
+                <h2 id="1-环境搭建前期准备"><a href="#1-环境搭建前期准备" class="headerlink" title="1. 环境搭建前期准备"></a>1. 环境搭建前期准备</h2><h3 id="组件版本"><a href="#组件版本" class="headerlink" title="组件版本"></a>组件版本</h3><ul>
+<li>Kubernetes 1.11.2</li>
+<li>Docker 18.06.0-ce</li>
+<li>Etcd v3.3.9</li>
+<li>Flanneld v0.10.0</li>
+<li>TLS 认证通信（所有组件，如etcd、kubernetes master 和node）</li>
+<li>RBAC 授权</li>
+<li>kubelet TLS Bootstrapping</li>
+<li>kubedns v1.14.10、dashboard v1.10.0、heapster v1.5.4等插件</li>
 </ul>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 初始化,此时mysql安装目录下已经自动创建了data文件夹。</span>
-mysqld --initialize-insecure --user<span class="token operator">=</span>mysql
-<span class="token comment"># 安装mysql服务，此处注意：是mysqld不是mysql</span>
-mysqld <span class="token function">install</span>
-<span class="token comment"># 启动mysql服务</span>
-net start mysql
-<span class="token comment"># 登录连接mysql客户端</span>
-mysql -u root -p
-<span class="token comment"># 进入mysql控制台,修改root用户密码</span>
-alter user <span class="token string">'root'</span>@<span class="token string">'localhost'</span> identified by <span class="token string">'新密码'</span>
-<span class="token comment"># -------其它命令，此处不执行---------</span>
-<span class="token comment"># 停止mysql服务</span>
-net stop mysql
-<span class="token comment"># 删除已安装的mysql服务</span>
-mysqld remove<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="etcd-集群-amp-amp-k8s-master-机器-amp-amp-k8s-node-机器"><a href="#etcd-集群-amp-amp-k8s-master-机器-amp-amp-k8s-node-机器" class="headerlink" title="etcd 集群 &amp;&amp; k8s master 机器 &amp;&amp; k8s node 机器"></a>etcd 集群 &amp;&amp; k8s master 机器 &amp;&amp; k8s node 机器</h3><ul>
+<li>master01：ip1</li>
+<li>node01: ip2</li>
+<li>node02: ip3</li>
+<li>node03: ip4</li>
+</ul>
+<h3 id="集群环境变量"><a href="#集群环境变量" class="headerlink" title="集群环境变量"></a>集群环境变量</h3><p>后续部署将会使用到的全局变量，定义如下（根据自己的机器、网络修改）：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"># TLS Bootstrapping 使用的Token，可以使用命令 head -c 16 /dev/urandom | od -An -t x | tr -d ' ' 生成
+$ export BOOTSTRAP_TOKEN="8981b594122ebed7596f1d3b69c78223"
+
+# 建议使用未用的网段来定义服务网段和Pod 网段
+# 服务网段(Service CIDR)，部署前路由不可达，部署后集群内部使用IP:Port可达
+$ export SERVICE_CIDR="10.254.0.0/16"
+# Pod 网段(Cluster CIDR)，部署前路由不可达，部署后路由可达(flanneld 保证)
+$ export CLUSTER_CIDR="172.30.0.0/16"
+
+# 服务端口范围(NodePort Range)
+$ export NODE_PORT_RANGE="30000-32766"
+
+# etcd集群服务地址列表
+$ export ETCD_ENDPOINTS="https://ip1:2379,https://ip2:2379,https://ip3:2379"
+
+# flanneld 网络配置前缀
+$ export FLANNEL_ETCD_PREFIX="/kubernetes/network"
+
+# kubernetes 服务IP(预先分配，一般为SERVICE_CIDR中的第一个IP)
+$ export CLUSTER_KUBERNETES_SVC_IP="10.254.0.1"
+
+# 集群 DNS 服务IP(从SERVICE_CIDR 中预先分配)
+$ export CLUSTER_DNS_SVC_IP="10.254.0.2"
+
+# 集群 DNS 域名
+$ export CLUSTER_DNS_DOMAIN="cluster.local."
+
+# MASTER API Server 地址
+$ export MASTER_URL="k8s-api.virtual.local"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="2-创建CA-证书和密钥"><a href="#2-创建CA-证书和密钥" class="headerlink" title="2. 创建CA 证书和密钥"></a>2. 创建CA 证书和密钥</h2><p><code>kubernetes</code> 系统各个组件需要使用<code>TLS</code>证书对通信进行加密，这里我们使用<code>CloudFlare</code>的PKI 工具集<a target="_blank" rel="noopener" href="https://pkg.cfssl.org/">cfssl</a> 来生成Certificate Authority(CA) 证书和密钥文件， CA 是自签名的证书，用来签名后续创建的其他TLS 证书。</p>
+<h3 id="安装-CFSSL"><a href="#安装-CFSSL" class="headerlink" title="安装 CFSSL"></a>安装 CFSSL</h3><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ wget https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
+$ chmod +x cfssl_linux-amd64
+$ sudo mv cfssl_linux-amd64 /usr/k8s/bin/cfssl
+
+$ wget https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64
+$ chmod +x cfssljson_linux-amd64
+$ sudo mv cfssljson_linux-amd64 /usr/k8s/bin/cfssljson
+
+$ wget https://pkg.cfssl.org/R1.2/cfssl-certinfo_linux-amd64
+$ chmod +x cfssl-certinfo_linux-amd64
+$ sudo mv cfssl-certinfo_linux-amd64 /usr/k8s/bin/cfssl-certinfo
+
+$ export PATH=/usr/k8s/bin:$PATH
+$ mkdir ssl &amp;&amp; cd ssl
+$ cfssl print-defaults config &gt; config.json
+$ cfssl print-defaults csr &gt; csr.json<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>借鉴于<a target="_blank" rel="noopener" href="https://blog.qikqiak.com/post/manual-install-high-available-kubernetes-cluster">https://blog.qikqiak.com/post/manual-install-high-available-kubernetes-cluster</a></p>
 
                 
             </div>
@@ -526,7 +567,7 @@ mysqld remove<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://nicholas2015.github.io/2021/06/22/mysql-install-windows/">https://nicholas2015.github.io/2021/06/22/mysql-install-windows/</a>
+                    <a href="https://nicholas2015.github.io/2021/06/26/kubernetes-install-01/">https://nicholas2015.github.io/2021/06/26/kubernetes-install-01/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -564,8 +605,8 @@ mysqld remove<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/database/">
-                                    <span class="chip bg-color">database</span>
+                                <a href="/tags/kubernetes/">
+                                    <span class="chip bg-color">kubernetes</span>
                                 </a>
                             
                         </div>
@@ -737,9 +778,10 @@ mysqld remove<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2021/06/26/kubernetes-install-01/">
                     <div class="card-image">
@@ -757,9 +799,9 @@ mysqld remove<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-26
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-26
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -772,6 +814,7 @@ mysqld remove<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -790,13 +833,13 @@ mysqld remove<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/01/01/hello-world/">
+                <a href="/2021/06/22/mysql-install-windows/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="MySQL免安装版部署">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">MySQL免安装版部署</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -807,14 +850,14 @@ mysqld remove<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-01
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-22
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%B5%8B%E8%AF%95/" class="post-category">
-                                    测试
+                            <a href="/categories/%E8%BF%90%E7%BB%B4/" class="post-category">
+                                    运维
                                 </a>
                             
                             
@@ -824,8 +867,8 @@ mysqld remove<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/test/">
-                        <span class="chip bg-color">test</span>
+                    <a href="/tags/database/">
+                        <span class="chip bg-color">database</span>
                     </a>
                     
                 </div>
